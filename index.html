@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Edwards Korea — Emergency Evacuation Plan</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: #f4f4f1;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── 상단 헤더 ── */
+  .header {
+    background: #003087;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding: 0 48px;
+    gap: 32px;
+    flex-shrink: 0;
+  }
+  .logo-text {
+    font-size: 28px;
+    font-weight: 900;
+    color: white;
+    letter-spacing: 3px;
+  }
+  .header-divider {
+    width: 2px;
+    height: 40px;
+    background: rgba(255,255,255,0.3);
+  }
+  .header-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 1px;
+  }
+  .header-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    letter-spacing: 1.5px;
+    margin-top: 2px;
+  }
+  .header-tag {
+    margin-left: auto;
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    font-style: italic;
+    letter-spacing: 0.3px;
+  }
+
+  /* ── 맵 영역 ── */
+  .map-area {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 40px 20px;
+  }
+
+  /* ── 범례 ── */
+  .legend {
+    background: #003087;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+    flex-shrink: 0;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .legend-line-main {
+    width: 44px;
+    height: 3px;
+    background: repeating-linear-gradient(90deg,#e8001c 0,#e8001c 10px,transparent 10px,transparent 16px);
+  }
+  .legend-line-sub {
+    width: 32px;
+    height: 2px;
+    background: repeating-linear-gradient(90deg,#e8001c 0,#e8001c 7px,transparent 7px,transparent 12px);
+  }
+  .legend-box {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+  }
+
+  @keyframes flow { to { stroke-dashoffset: -32; } }
+  .main  { fill:none; stroke:#e8001c; stroke-width:4;   stroke-dasharray:12 7; animation:flow 1.1s linear infinite; }
+  .sub   { fill:none; stroke:#e8001c; stroke-width:3;   stroke-dasharray:9 6;  animation:flow 1.1s linear infinite; animation-delay:-0.4s; }
+  .merge { fill:none; stroke:#e8001c; stroke-width:3;   stroke-dasharray:9 6;  animation:flow 1.1s linear infinite; animation-delay:-0.7s; }
+</style>
+</head>
+<body>
+
+<!-- 헤더 -->
+<div class="header">
+  <div class="logo-text">EDWARDS</div>
+  <div class="header-divider"></div>
+  <div>
+    <div class="header-title">CHEONAN SAFETY INDUCTION</div>
+    <div class="header-sub">PRODUCT COMPANY CHEONAN · EMERGENCY EVACUATION PLAN</div>
+  </div>
+  <div class="header-tag">We don't want anyone to get hurt</div>
+</div>
+
+<!-- 맵 SVG -->
+<div class="map-area">
+<svg width="100%" height="100%" viewBox="0 0 1600 870" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <marker id="ra" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M1 2L12 7L1 12" fill="none" stroke="#e8001c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+
+    <!-- 비상구 심볼 -->
+    <symbol id="exit-sign" viewBox="0 0 48 48">
+      <rect width="48" height="48" rx="5" fill="#007a33"/>
+      <!-- 문틀 -->
+      <line x1="10" y1="8"  x2="10" y2="42" stroke="white" stroke-width="3"   stroke-linecap="round"/>
+      <line x1="10" y1="8"  x2="26" y2="8"  stroke="white" stroke-width="3"   stroke-linecap="round"/>
+      <!-- 달리는 사람 머리 -->
+      <circle cx="36" cy="13" r="5.5" fill="white"/>
+      <!-- 몸통 -->
+      <line x1="36" y1="19" x2="30" y2="31" stroke="white" stroke-width="3"   stroke-linecap="round"/>
+      <!-- 앞팔 -->
+      <line x1="34" y1="23" x2="24" y2="20" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- 뒷팔 -->
+      <line x1="34" y1="23" x2="40" y2="28" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- 앞다리 -->
+      <line x1="30" y1="31" x2="22" y2="42" stroke="white" stroke-width="3"   stroke-linecap="round"/>
+      <!-- 뒷다리 -->
+      <line x1="30" y1="31" x2="36" y2="42" stroke="white" stroke-width="3"   stroke-linecap="round"/>
+    </symbol>
+  </defs>
+
+  <!-- ── 도로 배경 ── -->
+  <path d="M0 700 L380 880" stroke="#d0cfc8" stroke-width="38" fill="none"/>
+  <path d="M0 736 L372 892" stroke="#c0bfb8" stroke-width="5" fill="none" stroke-dasharray="22 12"/>
+  <path d="M1360 0 L1440 880" stroke="#d0cfc8" stroke-width="48" fill="none"/>
+
+  <!-- ── PARKING ── -->
+  <rect x="40"  y="130" width="160" height="440" rx="6" fill="#dcdcd9" stroke="#aaa" stroke-width="2"/>
+  <text x="120" y="358" text-anchor="middle" font-family="Arial" font-size="22" font-weight="700" fill="#333">PARKING</text>
+
+  <!-- ── STC (구 MACHINE SHOP) ── -->
+  <rect x="216" y="90"  width="348" height="494" rx="6" fill="#dcdcd9" stroke="#aaa" stroke-width="2"/>
+  <text x="390" y="340" text-anchor="middle" font-family="Arial" font-size="30" font-weight="900" fill="#1a1a1a">STC</text>
+
+  <!-- ── LAB (구 IS CELL) ── -->
+  <rect x="580" y="90"  width="404" height="180" rx="6" fill="#dcdcd9" stroke="#aaa" stroke-width="2"/>
+  <text x="782" y="190" text-anchor="middle" font-family="Arial" font-size="30" font-weight="900" fill="#1a1a1a">LAB</text>
+
+  <!-- ── PLATING LINE 1 ── -->
+  <rect x="580" y="284" width="120" height="100" rx="4" fill="#d0d0ce" stroke="#aaa" stroke-width="1.5"/>
+  <text x="640" y="326" text-anchor="middle" font-family="Arial" font-size="14" font-weight="700" fill="#333">PLATING</text>
+  <text x="640" y="346" text-anchor="middle" font-family="Arial" font-size="14" font-weight="700" fill="#333">LINE 1</text>
+
+  <!-- ── PLATING LINE 2 ── -->
+  <rect x="706" y="284" width="110" height="100" rx="4" fill="#d0d0ce" stroke="#aaa" stroke-width="1.5"/>
+  <text x="761" y="326" text-anchor="middle" font-family="Arial" font-size="14" font-weight="700" fill="#333">PLATING</text>
+  <text x="761" y="346" text-anchor="middle" font-family="Arial" font-size="14" font-weight="700" fill="#333">LINE 2</text>
+
+  <!-- ── INBOUND WH ── -->
+  <rect x="822"  y="284" width="162" height="100" rx="4" fill="#d0d0ce" stroke="#aaa" stroke-width="1.5"/>
+  <text x="903" y="326" text-anchor="middle" font-family="Arial" font-size="19" font-weight="700" fill="#1a1a1a">INBOUND</text>
+  <text x="903" y="352" text-anchor="middle" font-family="Arial" font-size="19" font-weight="700" fill="#1a1a1a">WH</text>
+
+  <!-- ── ASSEMBLY LINE ── -->
+  <rect x="580" y="398" width="404" height="174" rx="6" fill="#dcdcd9" stroke="#aaa" stroke-width="2"/>
+  <text x="782" y="480" text-anchor="middle" font-family="Arial" font-size="28" font-weight="900" fill="#1a1a1a">ASSEMBLY</text>
+  <text x="782" y="518" text-anchor="middle" font-family="Arial" font-size="28" font-weight="900" fill="#1a1a1a">LINE</text>
+
+  <!-- ── OFFICE (Assembly Line 하단에 맞닿음) ── -->
+  <rect x="216"  y="584" width="768" height="116" rx="6" fill="#dcdcd9" stroke="#aaa" stroke-width="2"/>
+  <text x="600"  y="650" text-anchor="middle" font-family="Arial" font-size="28" font-weight="900" fill="#1a1a1a">OFFICE</text>
+
+  <!-- ── ENTRANCE ── -->
+  <rect x="500" y="756" width="224" height="52" rx="5" fill="#ccc" stroke="#aaa" stroke-width="1.5"/>
+  <text x="612" y="789" text-anchor="middle" font-family="Arial" font-size="18" font-weight="700" fill="#444" letter-spacing="0.8">ENTRANCE</text>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  ASSEMBLY POINT                                    -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <rect x="1120" y="398" width="110" height="120" rx="8" fill="#007a33" stroke="#004d1f" stroke-width="3"/>
+  <!-- 사람 3명 -->
+  <circle cx="1143" cy="424" r="8"  fill="white"/>
+  <line x1="1143" y1="432" x2="1143" y2="460" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <line x1="1130" y1="444" x2="1156" y2="444" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="1143" y1="460" x2="1135" y2="476" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <line x1="1143" y1="460" x2="1151" y2="476" stroke="white" stroke-width="4" stroke-linecap="round"/>
+
+  <circle cx="1175" cy="424" r="8"  fill="white"/>
+  <line x1="1175" y1="432" x2="1175" y2="460" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <line x1="1162" y1="444" x2="1188" y2="444" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="1175" y1="460" x2="1167" y2="476" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <line x1="1175" y1="460" x2="1183" y2="476" stroke="white" stroke-width="4" stroke-linecap="round"/>
+
+  <circle cx="1207" cy="424" r="8"  fill="white"/>
+  <line x1="1207" y1="432" x2="1207" y2="460" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <line x1="1194" y1="444" x2="1220" y2="444" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="1207" y1="460" x2="1199" y2="476" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <line x1="1207" y1="460" x2="1215" y2="476" stroke="white" stroke-width="4" stroke-linecap="round"/>
+
+  <text x="1175" y="535" text-anchor="middle" font-family="Arial" font-size="16" font-weight="900" fill="#e8001c">ASSEMBLY</text>
+  <text x="1175" y="555" text-anchor="middle" font-family="Arial" font-size="16" font-weight="900" fill="#e8001c">POINT</text>
+
+  <!-- 건물~집결지 이격 점선 -->
+  <line x1="986" y1="458" x2="1118" y2="458" stroke="#bbb" stroke-width="1.5" stroke-dasharray="6 4"/>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  TAGGING YOUR CARD — 빨간 상자                    -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <rect x="1100" y="590" width="150" height="56" rx="7" fill="#c8001a" stroke="#9a0014" stroke-width="2.5"/>
+  <text x="1175" y="614" text-anchor="middle" font-family="Arial" font-size="15" font-weight="700" fill="white" letter-spacing="0.5">Tagging your</text>
+  <text x="1175" y="634" text-anchor="middle" font-family="Arial" font-size="15" font-weight="700" fill="white" letter-spacing="0.5">Card</text>
+
+  <!-- AP → Tagging 연결 -->
+  <path class="sub" d="M 1175 520 L 1175 588" marker-end="url(#ra)"/>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!--  비상구 11개                                       -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- [1][2][3] LAB 상단 -->
+  <use href="#exit-sign" x="680"  y="50"  width="48" height="48"/>
+  <use href="#exit-sign" x="790"  y="50"  width="48" height="48"/>
+  <use href="#exit-sign" x="900"  y="50"  width="48" height="48"/>
+  <!-- [4] LAB 우측 상단 -->
+  <use href="#exit-sign" x="988"  y="170" width="48" height="48"/>
+  <!-- [5] INBOUND WH 우측 -->
+  <use href="#exit-sign" x="988"  y="308" width="48" height="48"/>
+  <!-- [6] Assembly Line 우측 -->
+  <use href="#exit-sign" x="988"  y="430" width="48" height="48"/>
+  <!-- [7] STC 좌측 상단 -->
+  <use href="#exit-sign" x="162"  y="170" width="48" height="48"/>
+  <!-- [8] STC 좌측 하단 -->
+  <use href="#exit-sign" x="162"  y="440" width="48" height="48"/>
+  <!-- [9] Office 하단 왼쪽 -->
+  <use href="#exit-sign" x="360"  y="700" width="48" height="48"/>
+  <!-- [10] Office 하단 오른쪽 -->
+  <use href="#exit-sign" x="630"  y="700" width="48" height="48"/>
+  <!-- [11] Office 오른편 벽 -->
+  <use href="#exit-sign" x="988"  y="608" width="48" height="48"/>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!--  대피 경로 — 모든 점선, 동일 마커                                -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+
+  <!-- ★ 메인 수직 간선: y=30 → Assembly Point y=396 -->
+  <path class="main" d="M 1060 30 L 1060 396" marker-end="url(#ra)"/>
+
+  <!-- 상단 수평선 y=30: 좌측 188 → 우측 1060 -->
+  <path class="sub"  d="M 188 30 L 1060 30"/>
+
+  <!-- [7] STC 좌측 상단: ↑ → 상단 수평선 합류 -->
+  <path class="merge" d="M 188 170 L 188 30"/>
+
+  <!-- [8] STC 좌측 하단: ↓ → 하단(y=760) → Office 루트 합류 -->
+  <path class="merge" d="M 188 488 L 188 760 L 384 760"/>
+
+  <!-- LAB 상단 3개 출구 → 상단 수평선 수직 연결 -->
+  <path class="merge" d="M 704 90 L 704 30"/>
+  <path class="merge" d="M 814 90 L 814 30"/>
+  <path class="merge" d="M 924 90 L 924 30"/>
+
+  <!-- [4] LAB 우측 상단 → 메인 간선 합류 -->
+  <path class="sub"   d="M 1036 194 L 1060 194 L 1060 30"/>
+
+  <!-- [5] INBOUND WH 우측 → 메인 합류 -->
+  <path class="merge" d="M 1036 332 L 1060 332 L 1060 194"/>
+
+  <!-- [6] Assembly Line 우측 → Assembly Point 직접 수평 -->
+  <path class="sub"   d="M 1036 454 L 1118 454" marker-end="url(#ra)"/>
+
+  <!-- [9][10][11][8] → 하단 수평(y=760) → 우측 상승 → Assembly Point -->
+  <path class="sub"   d="M 384 748 L 384 760 L 1070 760 L 1070 520" marker-end="url(#ra)"/>
+  <!-- [10] Office 하단 오른쪽 합류 -->
+  <path class="merge" d="M 654 748 L 654 760"/>
+  <!-- [11] Office 오른편 합류 -->
+  <path class="merge" d="M 1036 632 L 1070 632 L 1070 760"/>
+
+</svg>
+</div>
+
+<!-- 범례 -->
+<div class="legend">
+  <div class="legend-item">
+    <div class="legend-line-main"></div>
+    메인 대피 경로
+  </div>
+  <div class="legend-item">
+    <div class="legend-line-sub"></div>
+    구역별 합류 경로
+  </div>
+  <div class="legend-item">
+    <div class="legend-box" style="background:#007a33;"></div>
+    비상구 Exit (총 11개)
+  </div>
+  <div class="legend-item">
+    <div class="legend-box" style="background:#007a33; border:2px solid #004d1f;"></div>
+    Assembly Point (집결지)
+  </div>
+  <div class="legend-item">
+    <div class="legend-box" style="background:#c8001a;"></div>
+    Tagging your Card
+  </div>
+</div>
+
+</body>
+</html>
