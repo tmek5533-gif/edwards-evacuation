@@ -2,15 +2,17 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
 <title>Edwards Korea — Emergency Evacuation Plan</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
 
+  html { width:100%; height:100%; }
+
   body {
     background: #f4f4f1;
-    width: 1920px;
-    height: 1080px;
+    width: 100vw;
+    height: 100vh;
     overflow: hidden;
     font-family: Arial, sans-serif;
     display: flex;
@@ -20,15 +22,16 @@
   /* ── 상단 헤더 ── */
   .header {
     background: #003087;
-    height: 80px;
+    height: 7vh;
+    min-height: 52px;
     display: flex;
     align-items: center;
-    padding: 0 48px;
-    gap: 32px;
+    padding: 0 3vw;
+    gap: 2vw;
     flex-shrink: 0;
   }
   .logo-text {
-    font-size: 28px;
+    font-size: clamp(16px, 2.2vw, 32px);
     font-weight: 900;
     color: white;
     letter-spacing: 3px;
@@ -39,20 +42,20 @@
     background: rgba(255,255,255,0.3);
   }
   .header-title {
-    font-size: 20px;
+    font-size: clamp(11px, 1.3vw, 22px);
     font-weight: 700;
     color: white;
     letter-spacing: 1px;
   }
   .header-sub {
-    font-size: 13px;
+    font-size: clamp(9px, 0.85vw, 14px);
     color: rgba(255,255,255,0.65);
     letter-spacing: 1.5px;
     margin-top: 2px;
   }
   .header-tag {
     margin-left: auto;
-    font-size: 13px;
+    font-size: clamp(9px, 0.85vw, 14px);
     color: rgba(255,255,255,0.55);
     font-style: italic;
     letter-spacing: 0.3px;
@@ -61,27 +64,36 @@
   /* ── 맵 영역 ── */
   .map-area {
     flex: 1;
+    min-height: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 24px 40px 20px;
+    padding: 16px 32px 12px;
+    overflow: hidden;
+  }
+
+  .map-area svg {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
   }
 
   /* ── 범례 ── */
   .legend {
     background: #003087;
-    height: 52px;
+    height: 5vh;
+    min-height: 38px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 48px;
+    gap: 4vw;
     flex-shrink: 0;
   }
   .legend-item {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 13px;
+    gap: 8px;
+    font-size: clamp(9px, 0.8vw, 14px);
     color: rgba(255,255,255,0.85);
     font-weight: 600;
     letter-spacing: 0.5px;
